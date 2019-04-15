@@ -26,7 +26,7 @@ from ranger.ext.img_display import (W3MImageDisplayer, ITerm2ImageDisplayer,
                                     TerminologyImageDisplayer,
                                     URXVTImageDisplayer, URXVTImageFSDisplayer,
                                     KittyImageDisplayer, UeberzugImageDisplayer,
-                                    ImageDisplayer)
+                                    ImageDisplayer, MPVImageDisplayer)
 from ranger.core.metadata import MetadataManager
 from ranger.ext.rifle import Rifle
 from ranger.container.directory import Directory
@@ -242,7 +242,12 @@ class FM(Actions,  # pylint: disable=too-many-instance-attributes
             return KittyImageDisplayer()
         elif self.settings.preview_images_method == "ueberzug":
             return UeberzugImageDisplayer()
-        return ImageDisplayer()
+        elif self.settings.preview_images_method == "urxvt-full":
+            return URXVTImageFSDisplayer()
+        elif self.settings.preview_images_method == "mpv":
+            return MPVImageDisplayer()
+        else:
+            return ImageDisplayer()
 
     def _get_thisfile(self):
         return self.thistab.thisfile
